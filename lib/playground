@@ -1,0 +1,33 @@
+switch(type){
+      case 'Popular':{
+        service = Get.find<RecommendedPopularServiceController>().PopularServiceList[id];
+        break;
+      }
+      case 'Recommended':{
+        service = Get.find<RecommendedPopularServiceController>().AllServiceList[id];
+        break;
+      }
+      case 'Electrian':{
+        service = Get.find<CategoryServiceController>().ElectrianServiceList[id];
+        //service = Get.find<RecommendedPopularServiceController>().AllServiceList[id];
+        break;
+      }
+      case 'Barber':{
+        service = Get.find<CategoryServiceController>().BarberServiceList[id];
+        break;
+      }
+      case 'Plumber':{
+        service = Get.find<CategoryServiceController>().PlumberServiceList[id];
+        break;
+      }
+    }
+
+
+    for(var i = 0;i<userdata.favourite.length;i++){
+          if(id == userdata.favourite[i]){
+            isPresent = true;
+          }
+          else{
+            isPresent = false;
+          }
+        }
