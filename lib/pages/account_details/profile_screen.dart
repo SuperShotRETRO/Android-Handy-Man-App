@@ -35,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
           init: UserDataController(),
           builder: (userDataController){
             userDataController.getCurrentUserData();
-            return userDataController.isLoading ? CircularProgressIndicator(color: Colors.black,):Container(
+            return userDataController.isCurrentLoading ? CircularProgressIndicator(color: Colors.black,):Container(
               color: Colors.white,
               padding: EdgeInsets.all(Dimensions.width10),
               child: Column(
@@ -102,6 +102,29 @@ class ProfileScreen extends StatelessWidget {
                       child: Icon(Icons.settings,color: Colors.blueAccent),
                     ),
                     title: Text("Settings"),
+                    trailing: Container(
+                      width: Dimensions.width30,
+                      height: Dimensions.height30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.black.withOpacity(0.1)
+                      ),
+                      child: Icon(CupertinoIcons.arrowtriangle_right,size: Dimensions.iconSize16,color: Colors.grey,),
+                    ),
+                  ),
+
+                  //Address
+                  ListTile(
+                    leading: Container(
+                      width: Dimensions.width30,
+                      height: Dimensions.height30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.green.withOpacity(0.1)
+                      ),
+                      child: Icon(Icons.book,color: Colors.greenAccent),
+                    ),
+                    title: Text("Address Book"),
                     trailing: Container(
                       width: Dimensions.width30,
                       height: Dimensions.height30,

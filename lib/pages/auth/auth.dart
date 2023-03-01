@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finalhandyman/controllers/user_data_controller.dart';
 import 'package:finalhandyman/pages/auth/phone_signup_login_page.dart';
 import 'package:finalhandyman/routes/route_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ class Auth {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   var verificationId = ''.obs;
   User? get currentUser => firebaseAuth.currentUser;
+  var allUsers = UserDataController().AllUserDataList;
   Stream<User?> get authStateChange => firebaseAuth.authStateChanges();
 
   Future<void> signInWithEmailAndPassword({
@@ -50,6 +52,13 @@ class Auth {
         codeAutoRetrievalTimeout: (verificationId){
           this.verificationId.value = verificationId;
         });
+    for(int i =0;i < allUsers.length;i++){
+      if(allUsers[i].number == phoneNo){
+        break;
+      }
+      else{}
+      createUser(uid: currentUser?.uid,number: phoneNo);
+    }
   }
 
 
@@ -64,11 +73,12 @@ class Auth {
   }
 
 
-  Future createUser({ required String? uid , required String? email,required String? name }) async {
+  Future createUser({ required String? uid , String? email,String? number, String? name }) async {
     final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
     final json = {
-      'email':email,
-      'name':name,
+      'email':email ?? "",
+      'number': number ?? "",
+      'name':name ?? "",
       'favourite':[]
     };
     await docUser.set(json);}

@@ -33,7 +33,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   @override
   Widget build(BuildContext context) {
 
-    var service = widget.recommendedPopularServiceController.AllServiceList[widget.id-1];
+    var service = widget.recommendedPopularServiceController.AllServiceList[widget.id];
     bool isPresent = false;
 
     Future addFav({required String uid,required int id}) async {

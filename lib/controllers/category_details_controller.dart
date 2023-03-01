@@ -7,6 +7,7 @@ class CategoryServiceController extends GetxController {
   var ElectrianServiceList = <ServiceModel>[];
   var BarberServiceList = <ServiceModel>[];
   var PlumberServiceList = <ServiceModel>[];
+  var PestcontrolServiceList = <ServiceModel>[];
 
   Future<void> getElectrianData() async {
     try {
@@ -67,6 +68,31 @@ class CategoryServiceController extends GetxController {
       PlumberServiceList.clear();
       for (var service in plumberservicelist.docs) {
         PlumberServiceList.add(ServiceModel(
+          name: service['name'],
+          price: service['price'],
+          rating: service['rating'],
+          reviewCount: service['reviews'],
+          category: service['category'],
+          image: service['image'],
+          id: service['id'],
+        ));
+      }
+      update();
+      isLoading = false;
+    } catch (e) {
+      Get.snackbar('Error', '${e.toString()}');
+    }
+  }
+
+  Future<void> getPestData() async {
+    try {
+      QuerySnapshot pestcontrolservicelist = await FirebaseFirestore.instance
+          .collection('popular_service')
+          .where('category', isEqualTo: 'Pest control')
+          .get();
+      PestcontrolServiceList.clear();
+      for (var service in pestcontrolservicelist.docs) {
+        PestcontrolServiceList.add(ServiceModel(
           name: service['name'],
           price: service['price'],
           rating: service['rating'],

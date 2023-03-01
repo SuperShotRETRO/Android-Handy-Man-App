@@ -33,6 +33,10 @@ class CategoryPage extends StatelessWidget {
         categoryList = categoryServiceController.PlumberServiceList;
         break;
       }
+      case 'Pest Control':{
+        categoryList = categoryServiceController.PestcontrolServiceList;
+        break;
+      }
     }
 
     return Scaffold(
@@ -87,6 +91,7 @@ class CategoryPage extends StatelessWidget {
                     categoryServiceController.getElectrianData();
                     categoryServiceController.getBarberData();
                     categoryServiceController.getPlumberData();
+                    categoryServiceController.getPestData();
                     return ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: categoryList.length,

@@ -1,3 +1,4 @@
+import 'package:finalhandyman/pages/account_details/profile_screen.dart';
 import 'package:finalhandyman/pages/account_details/update_profile_page.dart';
 import 'package:finalhandyman/pages/auth/login_screen.dart';
 import 'package:finalhandyman/pages/auth/login_tree.dart';
@@ -5,6 +6,7 @@ import 'package:finalhandyman/pages/auth/phone_signup_login_page.dart';
 import 'package:finalhandyman/pages/auth/signup_screen.dart';
 import 'package:finalhandyman/pages/auth/otp_page.dart';
 import 'package:finalhandyman/pages/home/home_page.dart';
+import 'package:finalhandyman/pages/home/search_page.dart';
 import 'package:finalhandyman/pages/service/service_detail.dart';
 import 'package:finalhandyman/pages/splash/splash_page.dart';
 import 'package:get/get.dart';
@@ -19,8 +21,10 @@ class RouteHelper{
   static const String phoneSignupPage = "/phone-signup-page";
   static const String otpPage = "/OTP-page";
   static const String initial = "/";
+  static const String searchPage = "/search-page";
   static const String serviceDetails = "/popular-service";
   static const String categoryPage = "/category-list";
+  static const String profilePage = "/profile-page";
   static const String updateProfilePage = "/update-Profile-Page";
 
 
@@ -31,8 +35,10 @@ class RouteHelper{
   static String getPhoneSignupPage()=> '$phoneSignupPage';
   static String getOTPPage(String verificationID)=> '$otpPage?verificationID=$verificationID';
   static String getInitial()=> '$initial';
+  static String getSearchPage()=>'$searchPage';
   static String getserviceDetails(int id)=> '$serviceDetails?pageId=$id';
   static String getCategoryPage(String category)=> '$categoryPage?category=$category';
+  static String getProfilePage()=> '$profilePage';
   static String getUpdateProfilePage() => '$updateProfilePage';
 
 
@@ -47,6 +53,7 @@ class RouteHelper{
       return OTPPage(verificationID: verificationID!);
     }),
     GetPage(name: initial , page: ()=>HomePage()),
+    GetPage(name: searchPage, page: ()=>SearchPage()),
     GetPage(name: serviceDetails, page: (){
       var id = Get.parameters['pageId'];
       return ServiceDetails(id:int.parse(id!));
@@ -59,6 +66,7 @@ class RouteHelper{
     },
     transition: Transition.fadeIn
     ),
+    GetPage(name: profilePage, page: ()=>ProfileScreen()),
     GetPage(name: updateProfilePage, page: ()=>UpdateProfilePage()),
   ];
 }

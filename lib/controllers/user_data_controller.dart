@@ -8,6 +8,7 @@ import '../pages/auth/auth.dart';
 
 class UserDataController extends GetxController{
   var isLoading = true;
+  var isCurrentLoading = true;
   var AllUserDataList = <UserDataModel>[];
   UserDataModel CurrentUserData = UserDataModel();
 
@@ -34,10 +35,10 @@ class UserDataController extends GetxController{
       var currentuserdata = await FirebaseFirestore.instance.collection('user').doc('${uid}').get();
       CurrentUserData = UserDataModel(uid: currentuserdata.id,name:currentuserdata['name'],email: currentuserdata['email'],favourite: currentuserdata['favourite']);
       update();
-      isLoading = false;
+      isCurrentLoading = false;
     }
     catch(e){
-      Get.snackbar('Error', '${e.toString()}');
+      Get.snackbar('Error1', '${e.toString()}');
     }
   }
 

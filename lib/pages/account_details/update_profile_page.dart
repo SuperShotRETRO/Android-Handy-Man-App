@@ -1,20 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finalhandyman/controllers/user_data_controller.dart';
+import 'package:finalhandyman/routes/route_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class UpdateProfilePage extends StatelessWidget {
-  const UpdateProfilePage({Key? key}) : super(key: key);
+  UpdateProfilePage({Key? key}) : super(key: key);
+
+  UserDataController userDataController = Get.put(UserDataController());
+
+  var namecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    Future updateUser({required String uid }) async {
+      final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
+      final json = {
+        'name': namecontroller.text
+      };
+    }
+
+
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Update Profile",style: TextStyle(color: Colors.black),textAlign: TextAlign.center,)),
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: (){
-              Get.back();
+              Get.offNamed(RouteHelper.getProfilePage());
               },
             icon: Icon(CupertinoIcons.back,color: Colors.black,)),
         elevation: 0,
@@ -57,6 +73,8 @@ class UpdateProfilePage extends StatelessWidget {
               Form(child: Column(
                 children: [
                   TextFormField(
+                    controller: namecontroller,
+                    initialValue: userDataController.CurrentUserData.name,
                     decoration: InputDecoration(
                       label: Text('Full Name'),
                       prefixIcon: Icon(CupertinoIcons.person)
