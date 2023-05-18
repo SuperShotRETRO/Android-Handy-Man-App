@@ -1,9 +1,8 @@
-import 'package:finalhandyman/pages/home/home_page.dart';
 import 'package:finalhandyman/routes/route_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../pages/auth/auth.dart';
+
 
 class OTPController extends GetxController{
   static OTPController get instance => Get.find();
@@ -21,5 +20,3 @@ class OTPController extends GetxController{
   }
 }
 
-//var isVerified = await Auth().verifyOTP(otp);
-//isVerified ? Get.offAll(HomePage()) : Get.back();

@@ -1,7 +1,8 @@
-import 'package:finalhandyman/routes/route_helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -14,8 +15,7 @@ class PhoneSignupLoginPage extends StatefulWidget {
 
   @override
   State<PhoneSignupLoginPage> createState() => _PhoneSignupLoginPageState();
-
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
 }
 
@@ -24,9 +24,11 @@ class _PhoneSignupLoginPageState extends State<PhoneSignupLoginPage> {
   OTPController otpController = Get.put(OTPController());
   var phoneNoController = TextEditingController();
 
+
   Future<void> createUserWithPhoneAndPassword() async {
     try{
-      await Auth().createUserWithPhone(phoneNo: phoneNoController.text);
+      await Auth().createUserWithPhone(phoneNo: "+91${phoneNoController.text}");
+
     } on FirebaseAuthException catch (e) {
       print(e.message);
     }
@@ -55,6 +57,10 @@ class _PhoneSignupLoginPageState extends State<PhoneSignupLoginPage> {
                         //E-Mail
                         TextFormField(
                           controller: phoneNoController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(10)
+                          ],
                           decoration: InputDecoration(
                             prefixIcon: Icon(CupertinoIcons.person),
                             labelText: 'Phone No.',
@@ -69,7 +75,7 @@ class _PhoneSignupLoginPageState extends State<PhoneSignupLoginPage> {
                           width: double.infinity,
                           height: Dimensions.height45,
                           child: ElevatedButton(
-                            onPressed: (){
+                            onPressed: ()async{
                               createUserWithPhoneAndPassword();
                             },
                             child: Text('Login'),

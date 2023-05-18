@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finalhandyman/controllers/recommended_popular_service_controller.dart';
-import 'package:finalhandyman/models/service_model.dart';
+import 'package:finalhandyman/controllers/service_controller.dart';
 import 'package:finalhandyman/utils/dimension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +15,15 @@ class SearchPage extends StatefulWidget {
 
   @override
   State<SearchPage> createState() => _SearchPageState();
-  RecommendedPopularServiceController recommendedPopularServiceController =
-      Get.put(RecommendedPopularServiceController());
+  ServiceController serviceController =
+      Get.put(ServiceController());
 }
 
 class _SearchPageState extends State<SearchPage> {
   String name = '';
   @override
   Widget build(BuildContext context) {
-    var allService = widget.recommendedPopularServiceController.AllServiceList;
+    var allService = widget.serviceController.AllServiceList;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -129,14 +127,14 @@ class _SearchPageState extends State<SearchPage> {
                                         children: [
                                           IconText(
                                               icon: Icons.location_on,
-                                              text: "1.5km",
+                                              text: data.distance,
                                               iconColor: Colors.black),
                                           SizedBox(
                                             width: Dimensions.width30,
                                           ),
                                           IconText(
                                               icon: Icons.access_time,
-                                              text: "30min",
+                                              text: data.duration,
                                               iconColor: Colors.black)
                                         ],
                                       )

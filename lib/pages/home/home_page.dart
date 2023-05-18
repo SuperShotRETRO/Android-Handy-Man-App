@@ -1,16 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finalhandyman/pages/account_details/profile_screen.dart';
-import 'package:finalhandyman/pages/auth/otp_page.dart';
-import 'package:finalhandyman/pages/auth/signup_screen.dart';
 import 'package:finalhandyman/pages/favourite_page/favourite_page.dart';
 import 'package:finalhandyman/pages/home/main_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../../controllers/user_data_controller.dart';
-import '../auth/auth.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);

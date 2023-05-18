@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:finalhandyman/controllers/user_data_controller.dart';
 import 'package:finalhandyman/routes/route_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +37,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
           ScaleTransition(
             scale: animation,
             child: Center(
-              child: Image.asset('TestImages/1 (16).jpg'),
+              child: Image.asset('TestImages/logo.jpg'),
             ),
           ),
           Center(
-            child: Image.asset('TestImages/1 (17).jpg'),
+            child: Image.asset('TestImages/name.jpg'),
           )
         ],
       ),

@@ -1,4 +1,4 @@
-import 'package:finalhandyman/controllers/recommended_popular_service_controller.dart';
+import 'package:finalhandyman/controllers/service_controller.dart';
 import 'package:finalhandyman/controllers/user_data_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +15,12 @@ import '../../widgets/small_text.dart';
 class FavouritePage extends StatelessWidget {
   FavouritePage({Key? key}) : super(key: key);
   UserDataController userDataController = Get.put(UserDataController());
-  RecommendedPopularServiceController recommendedPopularServiceController = Get.put(RecommendedPopularServiceController());
+  ServiceController serviceController = Get.put(ServiceController());
 
   @override
   Widget build(BuildContext context) {
     var currentuserdata = userDataController.CurrentUserData;
-    var serviceList = recommendedPopularServiceController.AllServiceList;
+    var serviceList = serviceController.AllServiceList;
 
 
 
@@ -74,8 +74,10 @@ class FavouritePage extends StatelessWidget {
                   initState: (_){},
                   builder: (userDataController){
                     userDataController.getCurrentUserData();
-                    recommendedPopularServiceController.getData();
-                    return userDataController.isLoading ?CircularProgressIndicator(color: Colors.black,):ListView.builder(
+                    if(serviceController.AllServiceList.isEmpty){
+                            serviceController.getData();
+                          }
+                          return userDataController.isLoading ?CircularProgressIndicator(color: Colors.black,):ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: currentuserdata.favourite.length,
                         shrinkWrap: true,
@@ -83,7 +85,7 @@ class FavouritePage extends StatelessWidget {
                           return GestureDetector(
                             onTap: (){
                               Get.toNamed(RouteHelper.getserviceDetails(
-                                  recommendedPopularServiceController.AllServiceList[currentuserdata.favourite[index]].id));
+                                  serviceController.AllServiceList[currentuserdata.favourite[index]].id));
                             },
                             child: Container(
                               margin: EdgeInsets.only(
@@ -128,14 +130,14 @@ class FavouritePage extends StatelessWidget {
                                               children: [
                                                 IconText(
                                                     icon: Icons.location_on,
-                                                    text: "1.5km",
+                                                    text: serviceList[currentuserdata.favourite[index]].distance,
                                                     iconColor: Colors.black),
                                                 SizedBox(
                                                   width: Dimensions.width30,
                                                 ),
                                                 IconText(
                                                     icon: Icons.access_time,
-                                                    text: "30min",
+                                                    text: serviceList[currentuserdata.favourite[index]].duration,
                                                     iconColor: Colors.black)
                                               ],
                                             )

@@ -11,16 +11,20 @@ class UpdateProfilePage extends StatelessWidget {
 
   UserDataController userDataController = Get.put(UserDataController());
 
-  var namecontroller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
 
-    Future updateUser({required String uid }) async {
+    var name;
+    var namecontroller = TextEditingController(text: userDataController.CurrentUserData.name);
+
+    Future updateUser({required String uid}) async {
       final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
       final json = {
-        'name': namecontroller.text
+        'name': name
       };
+      await docUser.update(json);
     }
 
 
@@ -30,7 +34,7 @@ class UpdateProfilePage extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: (){
-              Get.offNamed(RouteHelper.getProfilePage());
+              Get.offNamed(RouteHelper.getInitial());
               },
             icon: Icon(CupertinoIcons.back,color: Colors.black,)),
         elevation: 0,
@@ -74,38 +78,22 @@ class UpdateProfilePage extends StatelessWidget {
                 children: [
                   TextFormField(
                     controller: namecontroller,
-                    initialValue: userDataController.CurrentUserData.name,
                     decoration: InputDecoration(
                       label: Text('Full Name'),
                       prefixIcon: Icon(CupertinoIcons.person)
                     ),
-                  ),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        label: Text('Email'),
-                        prefixIcon: Icon(Icons.email_outlined)
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        label: Text('Phone No.'),
-                        prefixIcon: Icon(CupertinoIcons.phone)
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        label: Text('Password'),
-                        prefixIcon: Icon(CupertinoIcons.person)
-                    ),
+                    onChanged: (value){
+                      name = value;
+                    },
                   ),
                   SizedBox(height: 10,),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        updateUser(uid: userDataController.CurrentUserData.uid,);
+                        Get.offNamed(RouteHelper.getInitial());
+                      },
                       child: Text("Submit"),
                     ),
                   )

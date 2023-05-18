@@ -12,13 +12,17 @@ class AppColumn extends StatelessWidget {
   final String rating;
   final int reviewCount;
   final String category;
+  final String distance;
+  final String duration;
   const AppColumn(
       {Key? key,
       required this.text,
       required this.price,
       required this.rating,
       required this.reviewCount,
-      required this.category})
+      required this.category,
+      required this.distance,
+      required this.duration})
       : super(key: key);
 
   @override
@@ -71,14 +75,14 @@ class AppColumn extends StatelessWidget {
           children: [
             IconText(
                 icon: Icons.location_on,
-                text: "1.5km",
+                text: distance,
                 iconColor: Colors.black),
             SizedBox(
               width: Dimensions.width30,
             ),
             IconText(
                 icon: Icons.access_time,
-                text: "30min",
+                text: duration.substring(0,duration.length-1),
                 iconColor: Colors.black),
             SizedBox(
               width: Dimensions.width30,

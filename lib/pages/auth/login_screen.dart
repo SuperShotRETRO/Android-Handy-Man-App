@@ -98,7 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         //Forget Password
                         TextButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Get.offNamed(RouteHelper.getForgotPage());
+                            },
                             child: Text("Forgot Password?")),
                         SizedBox(height: Dimensions.height15+5,),
 
@@ -126,7 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: Dimensions.height45,
                               width: double.infinity,
                               child: OutlinedButton.icon(
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    Auth().googleSignIn();
+                                  },
                                   icon: Image(image: AssetImage("TestImages/GoogleLogo.jpg"),width:20,),
                                   label: Text("Sign In With Google")),
                             )

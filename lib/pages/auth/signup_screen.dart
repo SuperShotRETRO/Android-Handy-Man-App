@@ -122,36 +122,6 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
 
-                        //Sign-In with Google
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(height: Dimensions.height15,),
-                            Text('OR'),
-                            SizedBox(height: Dimensions.height15,),
-                            //Google
-                            SizedBox(
-                              height: Dimensions.height45,
-                              width: double.infinity,
-                              child: OutlinedButton.icon(
-                                  onPressed: (){},
-                                  icon: Image(image: AssetImage("TestImages/GoogleLogo.jpg"),width:20,),
-                                  label: Text("Sign In With Google")),
-                            ),
-                            SizedBox(height: Dimensions.height15,),
-
-                            //Phone
-                            SizedBox(
-                              height: Dimensions.height45,
-                              width: double.infinity,
-                              child: OutlinedButton.icon(
-                                  onPressed: (){},
-                                  icon: Image(image: AssetImage("TestImages/GoogleLogo.jpg"),width:20,),
-                                  label: Text("Sign In With Google")),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: Dimensions.height15,),
 
                         //Already have an account
                         Row(

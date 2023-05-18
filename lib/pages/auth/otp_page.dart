@@ -1,5 +1,6 @@
 import 'package:finalhandyman/controllers/otp_controller.dart';
 import 'package:finalhandyman/utils/dimension.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -9,6 +10,7 @@ import 'package:get/get_core/src/get_main.dart';
 class OTPPage extends StatefulWidget {
   final String verificationID;
   OTPPage({Key? key, required this.verificationID}) : super(key: key);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   State<OTPPage> createState() => _OTPPageState();
@@ -55,6 +57,7 @@ class _OTPPageState extends State<OTPPage> {
               child: ElevatedButton(
                   onPressed: () {
                     otpController.verifyOTP(otp,widget.verificationID);
+                    print(widget._auth.currentUser?.uid);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.black),

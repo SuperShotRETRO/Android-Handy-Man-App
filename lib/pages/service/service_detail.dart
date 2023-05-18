@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finalhandyman/routes/route_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../controllers/recommended_popular_service_controller.dart';
+import '../../controllers/service_controller.dart';
 import '../../controllers/user_data_controller.dart';
 import '../../utils/dimension.dart';
 import '../../widgets/app_column.dart';
@@ -15,7 +16,7 @@ import '../../widgets/expandable_text.dart';
 class ServiceDetails extends StatefulWidget {
   int id;
   ServiceDetails({Key? key,required this.id}) : super(key: key);
-  RecommendedPopularServiceController recommendedPopularServiceController = Get.put(RecommendedPopularServiceController());
+  ServiceController serviceController = Get.put(ServiceController());
   UserDataController userDataController = Get.put(UserDataController());
 
   @override
@@ -27,13 +28,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   @override
   void initState(){
     widget.userDataController.getCurrentUserData();
+    widget.userDataController.getAddress();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    var service = widget.recommendedPopularServiceController.AllServiceList[widget.id];
+    var service = widget.serviceController.AllServiceList[widget.id];
     bool isPresent = false;
 
     Future addFav({required String uid,required int id}) async {
@@ -47,7 +49,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
 
     Future removeFav({required String uid,required int id}) async {
       final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
-      final list = widget.userDataController.CurrentUserData.favourite.remove(id);
+      widget.userDataController.CurrentUserData.favourite.remove(id);
       final json = {
         'favourite':[...widget.userDataController.CurrentUserData.favourite]
       };
@@ -71,10 +73,9 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       initState: (_){},
       builder: (userDataController){
         userDataController.getCurrentUserData();
-
         return Scaffold(
           backgroundColor: Colors.white,
-          body: userDataController.isLoading || widget.recommendedPopularServiceController.AllServiceList.isEmpty? Center(child: CircularProgressIndicator(color: Colors.black,)):Stack(
+          body: userDataController.isLoading || widget.serviceController.AllServiceList.isEmpty? Center(child: CircularProgressIndicator(color: Colors.black,)):Stack(
             children: [
               //image
               Positioned(
@@ -129,6 +130,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           reviewCount: service.reviewCount,
                           text: service.name,
                           category: service.category,
+                          distance: service.distance,
+                          duration: service.duration,
                         ),
                         SizedBox(
                           height: Dimensions.height20,
@@ -189,9 +192,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       color: Colors.black),
-                  child: BigText(
-                    text: "Book Now",
-                    color: Colors.white,
+                  child: GestureDetector(
+                    onTap: (){
+                      Get.offNamed(RouteHelper.getCheckoutPage(widget.id));
+                    },
+                    child: BigText(
+                      text: "Book Now",
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],

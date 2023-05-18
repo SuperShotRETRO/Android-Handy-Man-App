@@ -15,13 +15,12 @@ class ProfileScreen extends StatelessWidget {
 
   Future<void> signOut() async {
     await Auth().signOut();
+    Get.offNamed(RouteHelper.getLoginTree());
   }
 
   @override
   Widget build(BuildContext context) {
 
-    var currentUser = userDataController.CurrentUserData;
-    print(currentUser.name);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +34,7 @@ class ProfileScreen extends StatelessWidget {
           init: UserDataController(),
           builder: (userDataController){
             userDataController.getCurrentUserData();
+            var currentUser = userDataController.CurrentUserData;
             return userDataController.isCurrentLoading ? CircularProgressIndicator(color: Colors.black,):Container(
               color: Colors.white,
               padding: EdgeInsets.all(Dimensions.width10),
@@ -70,8 +70,11 @@ class ProfileScreen extends StatelessWidget {
                       ]
                   ),
                   SizedBox(height: 10,),
-                  Text(currentUser.name,style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black),),
-                  Text(currentUser.email,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400),),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50,right: 50),
+                    child: Text(currentUser.name,style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black,overflow: TextOverflow.ellipsis,),),
+                  ),
+                  Text(currentUser.email == ''?currentUser.number:currentUser.email,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: Colors.black),),
                   SizedBox(height: 20,),
                   SizedBox(width: 150,
                     child: ElevatedButton(
@@ -90,55 +93,66 @@ class ProfileScreen extends StatelessWidget {
                   Divider(),
                   SizedBox(height: Dimensions.height10,),
 
-                  //Settings
-                  ListTile(
-                    leading: Container(
-                      width: Dimensions.width30,
-                      height: Dimensions.height30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.blue.withOpacity(0.1)
+                  //Address
+                  GestureDetector(
+                    onTap: () {
+                      Get.offNamed(RouteHelper.getAddressPage());
+                    },
+                    child: ListTile(
+                      leading: Container(
+                        width: Dimensions.width30,
+                        height: Dimensions.height30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.green.withOpacity(0.1)
+                        ),
+                        child: Icon(Icons.book,color: Colors.greenAccent),
                       ),
-                      child: Icon(Icons.settings,color: Colors.blueAccent),
-                    ),
-                    title: Text("Settings"),
-                    trailing: Container(
-                      width: Dimensions.width30,
-                      height: Dimensions.height30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.black.withOpacity(0.1)
+                      title: Text("Address Book"),
+                      trailing: Container(
+                        width: Dimensions.width30,
+                        height: Dimensions.height30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.black.withOpacity(0.1)
+                        ),
+                        child: Icon(CupertinoIcons.arrowtriangle_right,size: Dimensions.iconSize16,color: Colors.grey,),
                       ),
-                      child: Icon(CupertinoIcons.arrowtriangle_right,size: Dimensions.iconSize16,color: Colors.grey,),
                     ),
                   ),
 
-                  //Address
-                  ListTile(
-                    leading: Container(
-                      width: Dimensions.width30,
-                      height: Dimensions.height30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.green.withOpacity(0.1)
+                  //Orders
+                  GestureDetector(
+                    onTap: () {
+                      Get.offNamed(RouteHelper.getOrdersPage());
+                    },
+                    child: ListTile(
+                      leading: Container(
+                        width: Dimensions.width30,
+                        height: Dimensions.height30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.green.withOpacity(0.1)
+                        ),
+                        child: Icon(Icons.book,color: Colors.greenAccent),
                       ),
-                      child: Icon(Icons.book,color: Colors.greenAccent),
-                    ),
-                    title: Text("Address Book"),
-                    trailing: Container(
-                      width: Dimensions.width30,
-                      height: Dimensions.height30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.black.withOpacity(0.1)
+                      title: Text("Orders"),
+                      trailing: Container(
+                        width: Dimensions.width30,
+                        height: Dimensions.height30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.black.withOpacity(0.1)
+                        ),
+                        child: Icon(CupertinoIcons.arrowtriangle_right,size: Dimensions.iconSize16,color: Colors.grey,),
                       ),
-                      child: Icon(CupertinoIcons.arrowtriangle_right,size: Dimensions.iconSize16,color: Colors.grey,),
                     ),
                   ),
 
                   //Logout
                   GestureDetector(
                     onTap: signOut,
+
                     child: ListTile(
                       leading: Container(
                         width: Dimensions.width30,
